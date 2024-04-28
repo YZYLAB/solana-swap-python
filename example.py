@@ -2,7 +2,7 @@ from solders.keypair import Keypair
 from solanatracker import SolanaTracker
 
 async def swap():
-    keypair = Keypair.from_base58_string("YOUR_SECRET_KEY")
+    keypair = Keypair.from_base58_string("YOUR_SECRET_KEY_HERE")
 
     solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
 
@@ -12,11 +12,15 @@ async def swap():
         0.0005,  # Amount to swap
         10,  # Slippage
         str(keypair.pubkey()),  # Payer public key
-        0.000005,  # Priority fee (Recommended while network is congested)
+        0.00005,  # Priority fee (Recommended while network is congested)
         True,  # Force legacy transaction for Jupiter
     )
 
     txid = await solana_tracker.perform_swap(swap_response)
+
+    if not txid:
+        # Add retries / handle error as needed
+        raise Exception("Swap failed")
 
     # Returns txid when the swap is successful or raises an exception if the swap fails
     print("Transaction ID:", txid)

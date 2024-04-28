@@ -57,13 +57,16 @@ class SolanaTracker:
             raise error
 
     async def perform_swap(self, swap_response: dict) -> str:
-        serialized_transaction = base64.b64decode(swap_response["txn"])
-        txn = Transaction.from_bytes(serialized_transaction)
-        blockhash = self.connection.get_latest_blockhash().value.blockhash
+        try:
+            serialized_transaction = base64.b64decode(swap_response["txn"])
+            txn = Transaction.from_bytes(serialized_transaction)
+            blockhash = self.connection.get_latest_blockhash().value.blockhash
 
-        txn.sign([self.keypair], blockhash)
-        response = self.connection.send_raw_transaction(bytes(txn))
-        return self.confirm_transaction(str(response.value))
+            txn.sign([self.keypair], blockhash)
+            response = self.connection.send_raw_transaction(bytes(txn))
+            return self.confirm_transaction(str(response.value))
+        except Exception as e:
+            return False
 
     def confirm_transaction(self, txid: str, max_retries: int = 60, retry_interval: float = 1.0) -> str:
         retries = 0
