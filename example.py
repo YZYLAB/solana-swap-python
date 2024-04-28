@@ -2,17 +2,17 @@ from solders.keypair import Keypair
 from solanatracker import SolanaTracker
 
 async def swap():
-    keypair = Keypair.from_base58_string("YOUR_SECRET_KEY_HERE")
+    keypair = Keypair.from_base58_string("YOUR_SECRET_KEY")
 
-    solana_tracker = SolanaTracker(keypair, "https://api.solanatracker.io/rpc")
+    solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
 
     swap_response = await solana_tracker.get_swap_instructions(
         "So11111111111111111111111111111111111111112",  # From Token
-        "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",  # To Token
+        "667w6y7eH5tQucYQXfJ2KmiuGBE8HfYnqqbjLNSw7yww",  # To Token
         0.0005,  # Amount to swap
-        30,  # Slippage
+        10,  # Slippage
         str(keypair.pubkey()),  # Payer public key
-        0.00000005,  # Priority fee (Recommended while network is congested)
+        0.000005,  # Priority fee (Recommended while network is congested)
         True,  # Force legacy transaction for Jupiter
     )
 
