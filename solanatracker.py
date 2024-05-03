@@ -8,7 +8,7 @@ from solana.rpc.api import Client
 
 class SolanaTracker:
     def __init__(self, keypair: Keypair, rpc: str, debug: bool = False):
-        self.base_url = "https://api.solanatracker.io"
+        self.base_url = "https://swap-api.solanatracker.io"
         self.connection = Client(rpc)
         self.keypair = keypair
         self.debug = debug
