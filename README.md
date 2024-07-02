@@ -47,8 +47,6 @@ async def swap():
         0.005,  # Priority fee (Recommended while network is congested)
         True,  # Force legacy transaction for Jupiter
     )
-
-    # fix processed commitment
     
     # Define custom options
     custom_options = {
