@@ -11,7 +11,7 @@ from typing import Dict, Optional, Union
 
 class SolanaTracker:
     def __init__(self, keypair: Keypair, rpc: str):
-        self.base_url = "https://swap-api.solanatracker.io"
+        self.base_url = "https://swap-v2.solanatracker.io"
         self.rpc = rpc
         self.keypair = keypair
 

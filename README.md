@@ -4,10 +4,15 @@
 Easiest way to add Solana based swaps to your project.
 Uses the Solana Swap api from [https://docs.solanatracker.io](https://docs.solanatracker.io)
 
+## UPDATE - July 9: Swap API has been updated, way faster and supporting new markets!
+
 ## Now supporting
 - Raydium
+- Raydium CPMM
 - Pump.fun
-- Jupiter
+- Moonshot
+- Orca
+- Jupiter (Private Self Hosted API)
 
 ## Installation
 

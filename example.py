@@ -13,12 +13,12 @@ async def swap():
     swap_response = await solana_tracker.get_swap_instructions(
         "So11111111111111111111111111111111111111112",  # From Token
         "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",  # To Token
-        0.005,  # Amount to swap
+        0.0001,  # Amount to swap
         30,  # Slippage
         str(keypair.pubkey()),  # Payer public key
-        0.005,  # Priority fee (Recommended while network is congested)
-        True,  # Force legacy transaction for Jupiter
+        0.00005,  # Priority fee (Recommended while network is congested)
     )
+
     
     # Define custom options
     custom_options = {
