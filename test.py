@@ -4,24 +4,22 @@ import asyncio
 import time
 import requests
 
-async def swap(action):
-    amount_out = None
+async def swap(action,amount_out):
     start_time = time.time()
 
-    keypair = Keypair.from_base58_string("PK")  # Replace with your base58 private key
+    keypair = Keypair.from_base58_string("5feQQDeZjpqfFgwsp69obehYqmnAn4s1pejjfNJGiiYn1TAX52WqQLu813ut6VmVdTLGY47VMsEoaKh5HDkx1HuQ")  # Replace with your base58 private key
     
     solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
     
     if action == "buy":
         from_token = "So11111111111111111111111111111111111111112"
         to_token = "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX"
-        amount = 0.0001
+        amount = amount_out
     elif action == "sell":
         from_token = "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX"
         to_token = "So11111111111111111111111111111111111111112"
-        amount = 50
-        if amount_out:
-            amount = amount_out
+        amount = amount_out
+
 
     else:
         print("Invalid action specified. Use 'buy' or 'sell'.")
@@ -61,7 +59,8 @@ async def swap(action):
         print(f"Swap completed in {elapsed_time:.2f} seconds")
         print(f"Transaction finished in {end_time - send_time:.2f} seconds")
         print(f"{action} amount: {solana_tracker.amount_out} ")
-        amount_out = solana_tracker.amount_out
+
+        return solana_tracker.amount_out
         
     except Exception as e:
         end_time = time.time()
@@ -71,9 +70,9 @@ async def swap(action):
         # Add retries or additional error handling as needed
 
 async def main():
-    await swap("buy")
+    amount_out = await swap("buy", 0.0001)
     await asyncio.sleep(10)
-    await swap("sell")
+    await swap("sell", amount_out)
 
 if __name__ == "__main__":
     asyncio.run(main())

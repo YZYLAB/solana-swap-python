@@ -93,7 +93,6 @@ class SolanaTracker:
                 async with session.get(url, params=params, ssl=False) as response:
                     print(params)
                     data = await response.json()
-                    print(data)
 
                     try:
                         self.amount_out = round(float(data["rate"]["amountOut"]), 2)
