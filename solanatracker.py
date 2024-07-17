@@ -14,6 +14,7 @@ class SolanaTracker:
         self.base_url = "https://swap-v2.solanatracker.io"
         self.rpc = rpc
         self.keypair = keypair
+        self.amount_out = 0.00
 
     async def perform_swap(
         self,
@@ -87,9 +88,19 @@ class SolanaTracker:
         url = f"{self.base_url}/swap"
 
         try:
+
             async with aiohttp.ClientSession() as session:
-                async with session.get(url, params=params) as response:
+                async with session.get(url, params=params, ssl=False) as response:
+                    print(params)
                     data = await response.json()
+                    print(data)
+
+                    try:
+                        self.amount_out = round(float(data["rate"]["amountOut"]), 2)
+                    except Exception as error:
+                        print("Error fetching swap instructions:", error)
+                        raise error
+                    
             data["forceLegacy"] = force_legacy
             return data
         except Exception as error:

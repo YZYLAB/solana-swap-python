@@ -4,29 +4,40 @@ import asyncio
 import time
 import requests
 
-
-
-
-
-
-
-async def swap():
+async def swap(action):
+    amount_out = None
     start_time = time.time()
 
-    keypair = Keypair.from_base58_string("5feQQDeZjpqfFgwsp69obehYqmnAn4s1pejjfNJGiiYn1TAX52WqQLu813ut6VmVdTLGY47VMsEoaKh5HDkx1HuQ")  # Replace with your base58 private key
+    keypair = Keypair.from_base58_string("PK")  # Replace with your base58 private key
     
     solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
     
-    buy_response = await solana_tracker.get_swap_instructions(
-        "So11111111111111111111111111111111111111112",  # From Token
-        "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX",  # To Token
-        0.0001,  # Amount to swap
-        30,  # Slippage
+    if action == "buy":
+        from_token = "So11111111111111111111111111111111111111112"
+        to_token = "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX"
+        amount = 0.0001
+    elif action == "sell":
+        from_token = "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX"
+        to_token = "So11111111111111111111111111111111111111112"
+        amount = 50
+        if amount_out:
+            amount = amount_out
+
+    else:
+        print("Invalid action specified. Use 'buy' or 'sell'.")
+        return
+
+    response = await solana_tracker.get_swap_instructions(
+        from_token,  # From Token
+        to_token,    # To Token
+        amount,      # Amount to swap
+        30,          # Slippage
         str(keypair.pubkey()),  # Payer public key
-        0.00005,  # Priority fee (Recommended while network is congested)
+        0.00005,     # Priority fee (Recommended while network is congested)
     )
 
-    
+
+
     # Define custom options
     custom_options = {
         "send_options": {"skip_preflight": True, "max_retries": 5},
@@ -41,7 +52,7 @@ async def swap():
     
     try:
         send_time = time.time()
-        txid = await solana_tracker.perform_swap(buy_response, options=custom_options)
+        txid = await solana_tracker.perform_swap(response, options=custom_options)
         end_time = time.time()
         elapsed_time = end_time - start_time
         
@@ -49,9 +60,9 @@ async def swap():
         print("Transaction URL:", f"https://solscan.io/tx/{txid}")
         print(f"Swap completed in {elapsed_time:.2f} seconds")
         print(f"Transaction finished in {end_time - send_time:.2f} seconds")
-        print(f"buy amount: {solana_tracker.amount_out} ")
+        print(f"{action} amount: {solana_tracker.amount_out} ")
+        amount_out = solana_tracker.amount_out
         
-
     except Exception as e:
         end_time = time.time()
         elapsed_time = end_time - start_time
@@ -59,11 +70,10 @@ async def swap():
         print(f"Time elapsed before failure: {elapsed_time:.2f} seconds")
         # Add retries or additional error handling as needed
 
-
-
-
-
+async def main():
+    await swap("buy")
+    await asyncio.sleep(10)
+    await swap("sell")
 
 if __name__ == "__main__":
-    
-    asyncio.run(swap())
+    asyncio.run(main())
