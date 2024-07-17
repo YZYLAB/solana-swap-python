@@ -7,7 +7,7 @@ import requests
 async def swap(action,amount_out):
     start_time = time.time()
 
-    keypair = Keypair.from_base58_string("5feQQDeZjpqfFgwsp69obehYqmnAn4s1pejjfNJGiiYn1TAX52WqQLu813ut6VmVdTLGY47VMsEoaKh5HDkx1HuQ")  # Replace with your base58 private key
+    keypair = Keypair.from_base58_string("pk")  # Replace with your base58 private key
     
     solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
     
