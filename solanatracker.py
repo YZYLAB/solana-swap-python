@@ -95,7 +95,9 @@ class SolanaTracker:
                     data = await response.json()
 
                     try:
+                        
                         self.amount_out = round(float(data["rate"]["amountOut"]), 2)
+                        print(f"data: {data}")
                     except Exception as error:
                         print("Error fetching swap instructions:", error)
                         raise error

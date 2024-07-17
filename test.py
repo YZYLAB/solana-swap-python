@@ -3,7 +3,7 @@ from solanatracker import SolanaTracker
 import asyncio
 import time
 import requests
-from .secret import PK
+from secret import PK
 
 async def swap(action,amount_out):
     start_time = time.time()
@@ -19,7 +19,7 @@ async def swap(action,amount_out):
     elif action == "sell":
         from_token = "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX"
         to_token = "So11111111111111111111111111111111111111112"
-        amount = amount_out
+        amount = "auto"
 
 
     else:
@@ -61,7 +61,6 @@ async def swap(action,amount_out):
         print(f"Transaction finished in {end_time - send_time:.2f} seconds")
         print(f"{action} amount: {solana_tracker.amount_out} ")
 
-        return solana_tracker.amount_out
         
     except Exception as e:
         end_time = time.time()
@@ -71,9 +70,9 @@ async def swap(action,amount_out):
         # Add retries or additional error handling as needed
 
 async def main():
-    amount_out = await swap("buy", 0.0001)
+    await swap("buy", 0.0001)
     await asyncio.sleep(10)
-    await swap("sell", amount_out)
+    await swap("sell", "auto")
 
 if __name__ == "__main__":
     asyncio.run(main())
