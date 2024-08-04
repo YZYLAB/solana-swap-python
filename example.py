@@ -12,7 +12,7 @@ async def swap():
     
     swap_response = await solana_tracker.get_swap_instructions(
         "So11111111111111111111111111111111111111112",  # From Token
-        "4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R",  # To Token
+        "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX",  # To Token
         0.0001,  # Amount to swap
         30,  # Slippage
         str(keypair.pubkey()),  # Payer public key
