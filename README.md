@@ -127,7 +127,7 @@ Raptor aggregates liquidity across 20+ Solana DEXs and finds optimal multi-hop r
 
 #### Is there a fee for using this API?
 
-A 0.5% fee is charged on each successful transaction on this Legacy Swap API for unlimited usage, or use the Raptor Beta API directly for free. For public bots or high-volume sites, contact us via [Discord](https://discord.gg/JH2e9rR9fc) or email (solanatracker@yzylab.com) to get the fee reduced to 0.1%.
+A 0.5% fee is charged on each successful transaction on this Legacy Swap API for unlimited usage, or use the Raptor Beta API directly for free. For public bots or high-volume sites, contact us via [Discord](https://discord.gg/JH2e9rR9fc) or email (swap-api@solanatracker.io) to get the fee reduced to 0.1%.
 
 ## Resources
 
