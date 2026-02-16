@@ -2,17 +2,19 @@ from solders.keypair import Keypair
 from solanatracker import SolanaTracker
 import asyncio
 import time
+import logging
 
 async def swap():
     start_time = time.time()
 
-    keypair = Keypair.from_base58_string("YOUR_SECRET_KEY")  # Replace with your base58 private key
+    keypair = Keypair.from_base58_string ("PRIVATE_KEY_DONT_SHARE")  # Replace with your base58 private key
     
-    solana_tracker = SolanaTracker(keypair, "https://rpc.solanatracker.io/public?advancedTx=true")
+    # Get your api key from https://www.solanatracker.io/solana-rpc
+    solana_tracker = SolanaTracker(keypair, "https://rpc-mainnet.solanatracker.io/?api_key=YOUR_KEY", None, logging.INFO)
     
     swap_response = await solana_tracker.get_swap_instructions(
         "So11111111111111111111111111111111111111112",  # From Token
-        "9Vv199SR7VKVqbJmM5LoT26ZtC9bzrmqqxE3b4dfrubX",  # To Token
+        "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",  # To Token
         0.0001,  # Amount to swap
         30,  # Slippage
         str(keypair.pubkey()),  # Payer public key
@@ -22,7 +24,7 @@ async def swap():
     
     # Define custom options
     custom_options = {
-        "send_options": {"skip_preflight": True, "max_retries": 5},
+        "send_options": {"skip_preflight": True, "max_retries": 0},
         "confirmation_retries": 50,
         "confirmation_retry_timeout": 1000,
         "last_valid_block_height_buffer": 200,
